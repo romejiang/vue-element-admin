@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Notification } from 'element-ui'
 import store from '@/store'
 import { isElectron } from '@/utils/electron'
 
@@ -31,37 +31,34 @@ service.interceptors.request.use(
 
 service.interceptors.response.use(
   response => {
-    // const res = response.data
+    const res = response.data
     // console.log("response");
-    // console.log(response.status);
+    console.log(res);
+    // return response
+    if (res.code !== 0) {
+      Notification({
+        type: 'error',
+        title: '服务器提示',
+        message: res.error || '服务器提示，请稍后再试'
+      });
+      //   // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
+      //   if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+      //     // to re-login
+      //     MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+      //       confirmButtonText: 'Re-Login',
+      //       cancelButtonText: 'Cancel',
+      //       type: 'warning'
+      //     }).then(() => {
+      //       store.dispatch('user/resetToken').then(() => {
+      //         location.reload()
+      //       })
+      //     })
+      //   }
+      //   return Promise.reject(new Error(res.message || 'Error'))
+    }
     return response
-    // if (res.code !== 20000) {
-    //   Message({
-    //     message: res.message || 'Error',
-    //     type: 'error',
-    //     duration: 5 * 1000
-    //   })
-
-    //   // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-    //   if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-    //     // to re-login
-    //     MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-    //       confirmButtonText: 'Re-Login',
-    //       cancelButtonText: 'Cancel',
-    //       type: 'warning'
-    //     }).then(() => {
-    //       store.dispatch('user/resetToken').then(() => {
-    //         location.reload()
-    //       })
-    //     })
-    //   }
-    //   return Promise.reject(new Error(res.message || 'Error'))
-    // } else {
-    //   return response
-    // }
   },
   (error) => {
-    // if (error.response.status == 401) {
     if (error.response.status === 401 && isElectron()) {
       store.dispatch('user/refresh').then((data) => {
         // location.href = '/'
@@ -69,12 +66,12 @@ service.interceptors.response.use(
         // console.log(data);
       })
     } else {
-      Message({
-        message: error.message,
+      Notification({
         type: 'error',
-        duration: 5 * 1000
-      })
-      location.reload()
+        title: '网络错误',
+        message: error.message || '网络错误，请稍后再试'
+      });
+      // location.reload()
     }
     return Promise.reject(error)
   }
