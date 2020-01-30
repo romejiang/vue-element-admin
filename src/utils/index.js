@@ -6,13 +6,13 @@
  * Parse the time to string
  * @param {(Object|string|number)} time
  * @param {string} cFormat
- * @returns {string | null}
+ * @returns {string}
  */
 export function parseTime(time, cFormat) {
   if (arguments.length === 0) {
     return null
   }
-  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
+  const format = cFormat || '{y}-{m}-{d} {h}:{i}'
   let date
   if (typeof time === 'object') {
     date = time
@@ -34,11 +34,14 @@ export function parseTime(time, cFormat) {
     s: date.getSeconds(),
     a: date.getDay()
   }
-  const time_str = format.replace(/{([ymdhisa])+}/g, (result, key) => {
-    const value = formatObj[key]
+  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
+    let value = formatObj[key]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value ] }
-    return value.toString().padStart(2, '0')
+    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
+    if (result.length > 0 && value < 10) {
+      value = '0' + value
+    }
+    return value || 0
   })
   return time_str
 }
@@ -63,9 +66,9 @@ export function formatTime(time, option) {
     return '刚刚'
   } else if (diff < 3600) {
     // less 1 hour
-    return Math.ceil(diff / 60) + '分钟前'
+    return (Math.ceil(diff / 60) - 1) + '分钟前'
   } else if (diff < 3600 * 24) {
-    return Math.ceil(diff / 3600) + '小时前'
+    return (Math.ceil(diff / 3600) - 1) + '小时前'
   } else if (diff < 3600 * 24 * 2) {
     return '1天前'
   }
@@ -160,12 +163,12 @@ export function param2Obj(url) {
   }
   return JSON.parse(
     '{"' +
-      decodeURIComponent(search)
-        .replace(/"/g, '\\"')
-        .replace(/&/g, '","')
-        .replace(/=/g, '":"')
-        .replace(/\+/g, ' ') +
-      '"}'
+    decodeURIComponent(search)
+      .replace(/"/g, '\\"')
+      .replace(/&/g, '","')
+      .replace(/=/g, '":"')
+      .replace(/\+/g, ' ') +
+    '"}'
   )
 }
 
