@@ -97,3 +97,13 @@
   font-size: 14px;
   border-radius: 4px;
 }
+
+.filter-container {
+  .el-input {
+    padding-right: 5px;
+  }
+
+  .el-checkbox {
+    padding: 0 10px;
+  }
+}

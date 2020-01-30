@@ -129,6 +129,34 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  // insert
+
+  // =======  user  =======
+  {
+    path: '/user',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/user'),
+        name: 'User',
+        meta: { title: '用户', icon: 'icon', roles: ['admin'] }
+      }
+    ]
+  },
+  // ===================================
+  {
+    path: '/role',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/role'),
+        name: 'role',
+        meta: { title: '权限', icon: 'icon', roles: ['admin'] }
+      }
+    ]
+  },
   {
     path: '/permission',
     component: Layout,

@@ -163,7 +163,7 @@ export default {
                 path: this.redirect || '/',
                 query: this.otherQuery
               });
-            })
+            }).catch(() => {});
           this.loading = false;
         } else {
           console.log('error submit!!');

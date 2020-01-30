@@ -1,23 +1,64 @@
 import request from '@/utils/request'
-
-export function login(data) {
+// ====================================
+// ====================================
+//  User api
+// ====================================
+// ====================================
+/**
+ * 获取对象列表
+ */
+export function fetch(query) {
   return request({
-    url: '/public/login',
+    url: '/user',
+    method: 'get',
+    params: query
+  })
+}
+/**
+ * 获取登录用户的列表，JWT
+ */
+export function mine(query) {
+  return request({
+    url: '/user/mine',
+    method: 'get',
+    params: query
+  })
+}
+/**
+ * 通过ID获取对象
+ */
+export function fetchId(id) {
+  return request({
+    url: '/user/' + id,
+    method: 'get'
+  })
+}
+/**
+ * 添加对象
+ */
+export function addModel(data) {
+  return request({
+    url: '/user',
     method: 'post',
     data
   })
 }
-
-export function getInfo(token) {
+/**
+ * 更新对象
+ */
+export function updateModel(id, data) {
   return request({
-    url: '/user/current',
-    method: 'get'
+    url: `/user/${id}`,
+    method: 'put',
+    data
   })
 }
-
-export function logout() {
+/**
+ * 删除对象
+ */
+export function deleteModel(id) {
   return request({
-    url: '/public/logout',
-    method: 'get'
+    url: `/user/${id}`,
+    method: 'delete'
   })
 }

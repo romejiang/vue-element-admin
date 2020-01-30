@@ -1,4 +1,4 @@
-import { login, logout, getInfo, refresh } from '@/api/user'
+import { login, logout, getInfo, refresh } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/cookie'
 import { resetRouter } from '@/router'
 
@@ -99,11 +99,6 @@ const actions = {
         commit('SET_ROLES', [])
         removeToken()
         resetRouter()
-
-        dispatch('server/setStatus', false, { root: true })
-          .then(status => {
-
-          })
 
         resolve()
       }).catch(error => {

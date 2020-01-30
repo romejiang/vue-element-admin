@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 // ====================================
 // ====================================
-//  Role api
+//  {{ properCase name }} api
 // ====================================
 // ====================================
 /**
@@ -9,7 +9,7 @@ import request from '@/utils/request'
  */
 export function fetch(query) {
   return request({
-    url: '/role',
+    url: '/{{ name }}',
     method: 'get',
     params: query
   })
@@ -19,7 +19,7 @@ export function fetch(query) {
  */
 export function mine(query) {
   return request({
-    url: '/role/mine',
+    url: '/{{ name }}/mine',
     method: 'get',
     params: query
   })
@@ -29,7 +29,7 @@ export function mine(query) {
  */
 export function fetchId(id) {
   return request({
-    url: '/role/' + id,
+    url: '/{{ name }}/' + id,
     method: 'get'
   })
 }
@@ -38,7 +38,7 @@ export function fetchId(id) {
  */
 export function addModel(data) {
   return request({
-    url: '/role',
+    url: '/{{ name }}',
     method: 'post',
     data
   })
@@ -48,7 +48,7 @@ export function addModel(data) {
  */
 export function updateModel(id, data) {
   return request({
-    url: `/role/${id}`,
+    url: `/{{ name }}/${id}`,
     method: 'put',
     data
   })
@@ -58,7 +58,7 @@ export function updateModel(id, data) {
  */
 export function deleteModel(id) {
   return request({
-    url: `/role/${id}`,
+    url: `/{{ name }}/${id}`,
     method: 'delete'
   })
 }

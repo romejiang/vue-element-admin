@@ -1,0 +1,16 @@
+// insert
+
+  // =======  {{ name }}  =======
+  {
+    path: '/{{ name }}',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/{{ name }}'),
+        name: '{{ properCase name }}',
+        meta: { title: '权限', icon: 'icon', roles: ['admin'] }
+      }
+    ]
+  },
+  // ===================================

@@ -33,13 +33,22 @@ service.interceptors.response.use(
   response => {
     const res = response.data
     // console.log("response");
-    console.log(res);
+    // console.log(res);
     // return response
     if (res.code !== 0) {
+      const errInfo = res.detail
+        ? res.detail
+          .map(v => {
+            return "<br>" + v.field + " " + v.message;
+          })
+          .join("")
+        : "";
+
       Notification({
         type: 'error',
         title: '服务器提示',
-        message: res.error || '服务器提示，请稍后再试'
+        dangerouslyUseHTMLString: true,
+        message: res.error + errInfo
       });
       //   // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       //   if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
