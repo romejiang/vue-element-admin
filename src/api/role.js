@@ -1,64 +1,38 @@
 import request from '@/utils/request'
-// ====================================
-// ====================================
-//  Role api
-// ====================================
-// ====================================
-/**
- * 获取对象列表
- */
-export function fetch(query) {
+
+export function getRoutes() {
   return request({
-    url: '/role',
-    method: 'get',
-    params: query
-  })
-}
-/**
- * 获取登录用户的列表，JWT
- */
-export function mine(query) {
-  return request({
-    url: '/role/mine',
-    method: 'get',
-    params: query
-  })
-}
-/**
- * 通过ID获取对象
- */
-export function fetchId(id) {
-  return request({
-    url: '/role/' + id,
+    url: '/vue-element-admin/routes',
     method: 'get'
   })
 }
-/**
- * 添加对象
- */
-export function addModel(data) {
+
+export function getRoles() {
   return request({
-    url: '/role',
+    url: '/vue-element-admin/roles',
+    method: 'get'
+  })
+}
+
+export function addRole(data) {
+  return request({
+    url: '/vue-element-admin/role',
     method: 'post',
     data
   })
 }
-/**
- * 更新对象
- */
-export function updateModel(id, data) {
+
+export function updateRole(id, data) {
   return request({
-    url: `/role/${id}`,
+    url: `/vue-element-admin/role/${id}`,
     method: 'put',
     data
   })
 }
-/**
- * 删除对象
- */
-export function deleteModel(id) {
+
+export function deleteRole(id) {
   return request({
-    url: `/role/${id}`,
+    url: `/vue-element-admin/role/${id}`,
     method: 'delete'
   })
 }
